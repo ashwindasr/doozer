@@ -129,6 +129,7 @@ async def get_nightlies(runtime: Runtime, matching: Tuple[str, ...], exclude_arc
             remaining -= 1
 
     if remaining == limit:
+        print(inconsistent_nightly_sets)
         util.red_print("No sets of equivalent nightlies found for given parameters.")
         exit(1)
 
