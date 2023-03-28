@@ -113,6 +113,7 @@ async def get_nightlies(runtime: Runtime, matching: Tuple[str, ...], exclude_arc
     inconsistent_nightly_sets = []
     remaining = limit
     for nightly_set in generate_nightly_sets(nightlies_for_arch):
+        print()
         # check for deeper equivalence
         await nightly_set.populate_nightly_content(runtime)
         if await nightly_set.deeper_equivalence():
@@ -382,7 +383,7 @@ class Nightly:
                     # so just rely on source commit equivalence (already verified)
                     # and ignore the slim possibility that the RPMs installed differ.
                     continue
-                logger.debug(f"different because {tag} NVR {self_nvr} != {other_nvr}")
+                logger.info(f"different because {tag} NVR {self_nvr} != {other_nvr}")
                 return False
 
         return self.deeper_nightly_rhcos(other)
