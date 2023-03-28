@@ -113,7 +113,6 @@ async def get_nightlies(runtime: Runtime, matching: Tuple[str, ...], exclude_arc
     inconsistent_nightly_sets = []
     remaining = limit
     for nightly_set in generate_nightly_sets(nightlies_for_arch):
-        print()
         # check for deeper equivalence
         await nightly_set.populate_nightly_content(runtime)
         if await nightly_set.deeper_equivalence():
@@ -401,7 +400,7 @@ class Nightly:
         logger.debug(f"comparing {self.rhcos_inspector} and {other.rhcos_inspector}")
         for rpm_name, vr in self._rhcos_rpms.items():
             if rpm_name in other._rhcos_rpms and vr != other._rhcos_rpms[rpm_name]:
-                logger.debug(f"different '{rpm_name}' version-release {vr} != {other._rhcos_rpms[rpm_name]}")
+                logger.info(f"different '{rpm_name}' version-release {vr} != {other._rhcos_rpms[rpm_name]}")
                 return False
 
         return True
@@ -474,7 +473,7 @@ class NightlySet:
             for other in nightlies:
                 logger.debug(f"comparing {this.name} and {other.name}")
                 if not await this.deeper_equivalence(other):
-                    logger.debug(f"deeper equivalence failed for {self}")
+                    logger.info(f"deeper equivalence failed for {self}")
                     return False
 
         return True
